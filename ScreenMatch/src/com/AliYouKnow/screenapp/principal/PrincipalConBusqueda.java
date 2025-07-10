@@ -9,15 +9,16 @@ import java.util.Scanner;
 
 public class PrincipalConBusqueda {
 
-    Scanner teclado = new Scanner(System.in);
-    //System.out.println("Escriba el nombre de la pelicula: ");
-
-    var busqueda = teclado.nextLine();
-
-    String direccion = "https://www.omdbapi.com/?i=" + busqueda + "&apikey=fb5eae08";
-
     //este codigo no deberia estar en el main
     public static void main(String[] args) throws IOException, InterruptedException {
+
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Escriba el nombre de la pelicula: ");
+
+        var busqueda = teclado.nextLine();
+        //https://www.omdbapi.com/?t=Matrix&apikey=fb5eae08
+        String direccion = "https://www.omdbapi.com/?t=" + busqueda + "&apikey=fb5eae08";
+
         //Hacer una request/peticion a un servidor usando verbos http
 
         HttpClient client = HttpClient.newHttpClient();
