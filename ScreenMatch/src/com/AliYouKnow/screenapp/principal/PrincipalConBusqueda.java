@@ -1,5 +1,8 @@
 package com.AliYouKnow.screenapp.principal;
 
+import com.AliYouKnow.screenapp.modelos.Titulo;
+import com.google.gson.Gson;
+
 import java.io.IOException; //errores exception
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -31,8 +34,14 @@ public class PrincipalConBusqueda {
         HttpResponse<String> response = client
                 .send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(response.body());
+        String json = response.body();
+        System.out.println(json);
 
+        //Instanciando la clase del paquete gson
+        Gson gson = new Gson();
+        Titulo tituloConGson = gson.fromJson(json, Titulo.class );
+        //System.out.println("Titulo: " + tituloConGson.getNombre());
+        System.out.println(tituloConGson);
 
     }
 }
