@@ -43,5 +43,6 @@ public class PrincipalConBusqueda {
         //System.out.println("Titulo: " + tituloConGson.getNombre());
         System.out.println(tituloConGson);
 
+
     }
 }
