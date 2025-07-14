@@ -1,7 +1,10 @@
 package com.AliYouKnow.screenapp.principal;
 
 import com.AliYouKnow.screenapp.modelos.Titulo;
+import com.AliYouKnow.screenapp.modelos.TituloOmdb;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException; //errores exception
 import java.net.URI;
@@ -38,11 +41,27 @@ public class PrincipalConBusqueda {
         System.out.println(json);
 
         //Instanciando la clase del paquete gson
-        Gson gson = new Gson();
-        Titulo tituloConGson = gson.fromJson(json, Titulo.class );
+        //Gson gson = new Gson();
+
+        //Usando el patron builder con Gson para comprender
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE )
+                .create();
+
+        //Titulo tituloConGson = gson.fromJson(json, Titulo.class );
         //System.out.println("Titulo: " + tituloConGson.getNombre());
-        System.out.println(tituloConGson);
+        //System.out.println(tituloConGson);
+
+        TituloOmdb tituloConGsonOmdb = gson.fromJson(json, TituloOmdb.class);
+        System.out.println(tituloConGsonOmdb);
+
+        Titulo tituloConBuilder = new Titulo(tituloConGsonOmdb);
+        System.out.println(tituloConBuilder);
+
 
 
     }
+
+
+
 }

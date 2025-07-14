@@ -19,6 +19,14 @@ public class Titulo implements Comparable<Titulo>{
         this.fechaDeLanzamiento = fechaDeLanzamiento;
     }
 
+    //creando el constructor: que pueda recbir un tituloOmdb y que lo pase a titulo
+    public Titulo(TituloOmdb tituloConGsonOmdb) {
+
+        this.nombre = tituloConGsonOmdb.titile();
+        this.fechaDeLanzamiento = Integer.valueOf(tituloConGsonOmdb.year());
+        this.duracionEnMinutos = Integer.valueOf(tituloConGsonOmdb.runtime().substring(0,2));
+    }
+
     //creando metodos
     /*
     convencion de metodos: verbos en infinitivo y tambien en imperativo(mas usado)=
@@ -87,7 +95,7 @@ public class Titulo implements Comparable<Titulo>{
     @Override
     public String toString() {
         return  "nombre='" + nombre +
-                ", fechaDeLanzamiento=" + fechaDeLanzamiento;
-        //+", duracionEnMinutos=" + duracionEnMinutos;
+                ", fechaDeLanzamiento=" + fechaDeLanzamiento
+                +", duracionEnMinutos=" + duracionEnMinutos;
     }
 }
