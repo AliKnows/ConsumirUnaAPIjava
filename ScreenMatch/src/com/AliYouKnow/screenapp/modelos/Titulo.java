@@ -1,5 +1,6 @@
 package com.AliYouKnow.screenapp.modelos;
 
+import com.AliYouKnow.screenapp.excepciones.ErrorEnConversionDeDuracionException;
 import com.google.gson.annotations.SerializedName;
 
 public class Titulo implements Comparable<Titulo>{
@@ -24,7 +25,13 @@ public class Titulo implements Comparable<Titulo>{
 
         this.nombre = tituloConGsonOmdb.title();
         this.fechaDeLanzamiento = Integer.valueOf(tituloConGsonOmdb.year());
-        this.duracionEnMinutos = Integer.valueOf(tituloConGsonOmdb.runtime().substring(0,3).replace(" ",""));
+        if(tituloConGsonOmdb.runtime().contains("N/A")){
+            throw new ErrorEnConversionDeDuracionException("No se puede convertir la duracion " +
+                    "Porque contiene N/A");
+
+        }
+        this.duracionEnMinutos = Integer.valueOf(
+                tituloConGsonOmdb.runtime().substring(0,3).replace(" ",""));
     }
 
     //creando metodos

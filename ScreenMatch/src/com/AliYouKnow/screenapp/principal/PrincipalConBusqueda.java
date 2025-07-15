@@ -1,11 +1,13 @@
 package com.AliYouKnow.screenapp.principal;
 
+import com.AliYouKnow.screenapp.excepciones.ErrorEnConversionDeDuracionException;
 import com.AliYouKnow.screenapp.modelos.Titulo;
 import com.AliYouKnow.screenapp.modelos.TituloOmdb;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.FileWriter;
 import java.io.IOException; //errores exception
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -23,11 +25,11 @@ public class PrincipalConBusqueda {
 
         var busqueda = teclado.nextLine();
         //https://www.omdbapi.com/?t=Matrix&apikey=fb5eae08
-        String direccion = "https://www.omdbapi.com/?t=" + busqueda.replace(" ","+") + "&apikey=fb5eae08";//remplaza los expacios por +
+        String direccion = "https://www.omdbapi.com/?t=" + busqueda.replace(" ", "+") + "&apikey=fb5eae08";//remplaza los expacios por +
         //Utilizar la clase: URLEncoder para cambiar el espacio->
         //Hacer una request/peticion a un servidor usando verbos http
 
-        try{
+        try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(direccion))   //en este lugar esta el error del problema de Encoding
@@ -46,7 +48,7 @@ public class PrincipalConBusqueda {
 
             //Usando el patron builder con Gson para comprender
             Gson gson = new GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE )
+                    .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
                     .create();
 
             //Titulo tituloConGson = gson.fromJson(json, Titulo.class );
@@ -58,14 +60,24 @@ public class PrincipalConBusqueda {
 
             Titulo tituloConBuilder = new Titulo(tituloConGsonOmdb);
             System.out.println(" Titulo ya convertido: " + tituloConBuilder);
-        }catch(NumberFormatException e){
+
+            FileWriter escritura = new FileWriter("peliculas.txt"); // crea un archivo
+            escritura.write(tituloConBuilder.toString()); //el momento en que crea y escribe
+            escritura.close();                    //Cerrar la escritura, es importante cerra para evitar porblemas como de memoria,etc
+
+
+
+
+        } catch (NumberFormatException e) {
             System.out.println("Ocurrio un error");
             System.out.println(e.getMessage());
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println("");
 
-        }catch (Exception e){
-            System.out.println("Ocurrio un error inesperado");
+        }//catch (Exception e){  <- es una exception general mas generica
+        //System.out.println("Ocurrio un error inesperado");}
+        catch (ErrorEnConversionDeDuracionException e){
+            System.out.println(e.getMessage());
         }
         System.out.println("Finalizo la ejecucion del Programa");
     }
