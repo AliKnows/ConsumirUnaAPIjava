@@ -22,7 +22,7 @@ public class Titulo implements Comparable<Titulo>{
     //creando el constructor: que pueda recbir un tituloOmdb y que lo pase a titulo
     public Titulo(TituloOmdb tituloConGsonOmdb) {
 
-        this.nombre = tituloConGsonOmdb.titile();
+        this.nombre = tituloConGsonOmdb.title();
         this.fechaDeLanzamiento = Integer.valueOf(tituloConGsonOmdb.year());
         this.duracionEnMinutos = Integer.valueOf(tituloConGsonOmdb.runtime().substring(0,2));
     }
