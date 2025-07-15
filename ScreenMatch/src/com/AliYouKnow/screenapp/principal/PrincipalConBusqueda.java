@@ -23,44 +23,49 @@ public class PrincipalConBusqueda {
 
         var busqueda = teclado.nextLine();
         //https://www.omdbapi.com/?t=Matrix&apikey=fb5eae08
-        String direccion = "https://www.omdbapi.com/?t=" + busqueda + "&apikey=fb5eae08";
-
+        String direccion = "https://www.omdbapi.com/?t=" + busqueda.replace(" ","+") + "&apikey=fb5eae08";//remplaza los expacios por +
+        //Utilizar la clase: URLEncoder para cambiar el espacio->
         //Hacer una request/peticion a un servidor usando verbos http
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(direccion))
-                .build();
+        try{
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(direccion))   //en este lugar esta el error del problema de Encoding
+                    .build();
 // HttpRequest req = new HttpRequest(); <- es abstract como si fuera una "interfaz"
 //por eso se usa builder
-/*Recibir los datos despues de pedir*/
-        HttpResponse<String> response = client
-                .send(request, HttpResponse.BodyHandlers.ofString());
+            /*Recibir los datos despues de pedir*/
+            HttpResponse<String> response = client
+                    .send(request, HttpResponse.BodyHandlers.ofString());
 
-        String json = response.body();
-        System.out.println(json);
+            String json = response.body();
+            System.out.println(json);
 
-        //Instanciando la clase del paquete gson
-        //Gson gson = new Gson();
+            //Instanciando la clase del paquete gson
+            //Gson gson = new Gson();
 
-        //Usando el patron builder con Gson para comprender
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE )
-                .create();
+            //Usando el patron builder con Gson para comprender
+            Gson gson = new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE )
+                    .create();
 
-        //Titulo tituloConGson = gson.fromJson(json, Titulo.class );
-        //System.out.println("Titulo: " + tituloConGson.getNombre());
-        //System.out.println(tituloConGson);
+            //Titulo tituloConGson = gson.fromJson(json, Titulo.class );
+            //System.out.println("Titulo: " + tituloConGson.getNombre());
+            //System.out.println(tituloConGson);
 
-        TituloOmdb tituloConGsonOmdb = gson.fromJson(json, TituloOmdb.class);
-        System.out.println(tituloConGsonOmdb);
+            TituloOmdb tituloConGsonOmdb = gson.fromJson(json, TituloOmdb.class);
+            System.out.println(tituloConGsonOmdb);
 
-        try{
             Titulo tituloConBuilder = new Titulo(tituloConGsonOmdb);
-            System.out.println(tituloConBuilder);
+            System.out.println(" Titulo ya convertido: " + tituloConBuilder);
         }catch(NumberFormatException e){
             System.out.println("Ocurrio un error");
             System.out.println(e.getMessage());
+        }catch(IllegalArgumentException e){
+            System.out.println("");
+
+        }catch (Exception e){
+            System.out.println("Ocurrio un error inesperado");
         }
         System.out.println("Finalizo la ejecucion del Programa");
     }
