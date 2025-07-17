@@ -3,7 +3,6 @@ import com.AliYouKnow.screenapp.funciones.Clasificable;
 
 public class Pelicula extends Titulo implements Clasificable {
     private String director;
-
     public Pelicula(String nombre, int fechaDeLanzamiento){
         super(nombre, fechaDeLanzamiento);
     }
@@ -16,10 +15,10 @@ public class Pelicula extends Titulo implements Clasificable {
         this.director = director;
     }
 
-    @Override
+    @Override  //sobre escritura para leer el metodo getClasificacion de la clase: Clasificable
     public int getClasificacion() { return (int) calculaMedia() / 2; }
 
-    @Override
+    @Override //sobreescritura de la clase String
     public String toString() {
         return "Pelicula: " +this.getNombre() + " (" + getFechaDeLanzamiento() + ") ";
 

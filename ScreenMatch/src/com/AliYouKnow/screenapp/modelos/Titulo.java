@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Titulo implements Comparable<Titulo>{
 
-    @SerializedName("Title")
+    //@SerializedName("Title") //"Anotaciones" :nos esta nombrando que valor del Json esta y buscar el mismo
     private String nombre;
-    @SerializedName("Year")
+    //@SerializedName("Year")
     private int fechaDeLanzamiento;
    // @SerializedName("Runtime")
     private int duracionEnMinutos;
@@ -101,8 +101,8 @@ public class Titulo implements Comparable<Titulo>{
 
     @Override
     public String toString() {
-        return  "nombre='" + nombre +
+        return  "( nombre='" + nombre +
                 ", fechaDeLanzamiento=" + fechaDeLanzamiento
-                +", duracionEnMinutos=" + duracionEnMinutos;
+                +", duracionEnMinutos=" + duracionEnMinutos + ")";
     }
 }
